@@ -4,7 +4,7 @@
         <attribute name="eventDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="eventLocation" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="eventName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="eventProject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eventProjectName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="eventType" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>

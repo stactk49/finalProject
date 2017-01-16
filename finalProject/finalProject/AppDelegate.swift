@@ -91,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     {
         let viewContext = persistentContainer.viewContext
         
-        //event pizza
+        //getting Events
         let entity = NSEntityDescription.entity(forEntityName: "Events", in: viewContext)
         let event = NSManagedObject(entity: entity!, insertInto: viewContext)
         
@@ -100,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         event.setValue(location, forKey: "eventLocation")
         event.setValue(name, forKey: "eventName")
         event.setValue(projectName, forKey: "eventProjectName")
-        event.setValue(type, forKey: "evenType")
+        event.setValue(type, forKey: "eventType")
 
         //try to save event
         do{

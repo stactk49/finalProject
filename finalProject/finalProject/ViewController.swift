@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class projectAvailable: NSObject {
     
@@ -23,14 +24,18 @@ class projectAvailable: NSObject {
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var tableView: UITableView!
+    public var selectedProjectList: [String] = []
+    var projectSet: Set<projectAvailable> = []
+    var eventsList: [NSManagedObject] = []
     var projectList: [projectAvailable] = []
+    
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        //add testing variables.  
+        //add testing variables.
         //Note:  change to getting list of possible projects from Core Data when data implemented
         let project1 = projectAvailable(name: "Project 1")
         projectList.append(project1)
@@ -44,19 +49,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "allProjectsCell", for: indexPath)
         
-        var p: String = ""
+        let p = projectList[indexPath.row].projectName
         
         if projectList[indexPath.row].selected
         {
-            p = " * \(projectList[indexPath.row].projectName)"
+            cell.backgroundColor = UIColor.green
         }
         else
         {
-            p = "   \(projectList[indexPath.row].projectName)"
+            cell.backgroundColor = UIColor.clear
         }
         
         cell.textLabel!.text = p
-        //print("testing - \(toppingsString)")
         
         return cell
     }
@@ -85,26 +89,35 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //get the list of selected projects, and pass them onto the calender/gantt chart for processing
     @IBAction func projectsViewTransition(_ sender: UIButton) {
         
-        var selectedProjectList: [String] = []
-        
         for project in projectList {
             if project.selected
             {
                 selectedProjectList.append(project.projectName)
             }
         }
-        
-        if selectedProjectList.count > 0
-        {
-            //pass selectedProjectList onto calender/gantt chart
-        }
-        else
-        {
-            //give warning that no projects are selected
-        }
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        selectedProjectList = []
+        /*
+        EventManager.getAllEvents(completion: { Events in self.eventsList = Events
+            self.tableView.reloadData()
+        })
+        
+        //get list of all projects in database and transcribe them into an array with no repeats
+        for event in eventsList
+        {
+            let project = projectAvailable(name: event.value(forKey: "eventProjectName") as! String)
+            projectSet.insert(project)
+        }
+        for project in projectSet
+        {
+            projectList.append(project)
+        }*/
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
